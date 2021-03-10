@@ -348,3 +348,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+SampleProgram.Test/NUnit/nunit-console-runner.dll
+SampleProgram.Test/NUnit/nunit.core.dll
+SampleProgram.Test/NUnit/nunit.core.interfaces.dll
+SampleProgram.Test/NUnit/nunit.framework.dll
+SampleProgram.Test/NUnit/nunit.mocks.dll
+SampleProgram.Test/NUnit/nunit.util.dll
