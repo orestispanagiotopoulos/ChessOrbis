@@ -7,7 +7,7 @@ namespace ChessLib
 {
     public class BishopMove
     {
-        public static readonly (int X, int Y)[] Directions = new[] { (1, 1), (1, -1), (-1, 1), (-1, -1) };
+        public static readonly (int X, int Y)[] Directions = new[] { (1, 1), (1, -1), (-1, 1), (-1, -1) }; 
         public IEnumerable<Position> ValidMovesFor(Position pos)
         {
             foreach (var d in Directions)

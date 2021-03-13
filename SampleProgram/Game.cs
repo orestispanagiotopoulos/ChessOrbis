@@ -12,7 +12,7 @@ namespace SampleProgram
 
         public void Play(int moves)
         {
-            var knight = new BishopMove();//new KnightMove();
+            var knight = new KnightMove(); // new BishopMove();
 
 
             var pos = _startPosition;

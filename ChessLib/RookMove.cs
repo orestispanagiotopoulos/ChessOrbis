@@ -7,7 +7,7 @@ namespace ChessLib
 {
     public class RookMove
     {
-        public static readonly (int X, int Y)[] Directions = new[] { (1, 1), (1, -1), (-1, 1), (-1, -1) };
+        public static readonly (int X, int Y)[] Directions = new[] { (1, 0), (-1, 0), (0, 1), (0, -1) }; // move right, left, up, down
         public IEnumerable<Position> ValidMovesFor(Position pos)
         {
             foreach (var d in Directions)
