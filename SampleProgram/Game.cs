@@ -12,7 +12,9 @@ namespace SampleProgram
 
         public void Play(int moves)
         {
-            var knight = new KnightMove();
+            var knight = new BishopMove();//new KnightMove();
+
+
             var pos = _startPosition;
             Console.WriteLine("0: My position is {0}", pos);
 
