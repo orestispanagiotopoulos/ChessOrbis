@@ -16,22 +16,21 @@ namespace SampleProgram.Entities
             Position = pos;
         }
 
-        public abstract bool TryMove(List<Position> occupiedSquares, out Position? newPos, out Position? oldPos);
-        protected bool TryMove(List<Position> occupiedSquares, ref Position? newPos, ref Position? oldPos, List<Position> possibleMoves)
+        public abstract bool TryMove(List<Position> occupiedSquares, out (Position? NewPos, Position? OldPos)? pos);
+        protected bool TryMove(List<Position> occupiedSquares, List<Position> possibleMoves, ref (Position? NewPos, Position? OldPos)? pos)
         {
             while (possibleMoves.Any())
             {
-                var pos = possibleMoves[_rnd.Next(possibleMoves.Count)];
+                var possibleMove = possibleMoves[_rnd.Next(possibleMoves.Count)];
 
-                if (!occupiedSquares.Contains(pos))
+                if (!occupiedSquares.Contains(possibleMove))
                 {
-                    oldPos = Position;
-                    Position = pos;
-                    newPos = Position;
+                    pos = (possibleMove, Position);
+                    Position = possibleMove;
                     return true;
                 }
 
-                possibleMoves.Remove(pos);
+                possibleMoves.Remove(possibleMove);
             }
 
             return false;

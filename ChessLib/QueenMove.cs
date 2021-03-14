@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ChessLib
 {
@@ -9,6 +7,7 @@ namespace ChessLib
     {
         public IEnumerable<Position> ValidMovesFor(Position pos)
         {
+            // Queen moves like Rook and Bishop combined
             var bishopMove = new BishopMove();
             var rookMove = new RookMove();
 

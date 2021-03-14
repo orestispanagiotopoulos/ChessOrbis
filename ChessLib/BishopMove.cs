@@ -7,12 +7,13 @@ namespace ChessLib
 {
     public class BishopMove
     {
+        private const int MaxBishopScope = 7;
         public static readonly (int X, int Y)[] Directions = new[] { (1, 1), (1, -1), (-1, 1), (-1, -1) }; 
         public IEnumerable<Position> ValidMovesFor(Position pos)
         {
             foreach (var d in Directions)
             {
-                for (var i = 1; i <= 7; i++)
+                for (var i = 1; i <= MaxBishopScope; i++)
                 {
                     var newX = pos.X + i * d.X;
                     var newY = pos.Y + i * d.Y;

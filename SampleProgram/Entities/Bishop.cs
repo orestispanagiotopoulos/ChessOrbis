@@ -10,15 +10,14 @@ namespace SampleProgram.Entities
         {
         }
 
-        public override bool TryMove(List<Position> occupiedSquares, out Position? newPos, out Position? oldPos)
+        public override bool TryMove(List<Position> occupiedSquares, out (Position? NewPos, Position? OldPos)? pos)
         {
-            newPos = null;
-            oldPos = null;
+            pos = null;
 
             var bishopMove = new BishopMove();
             List<Position> possibleMoves = bishopMove.ValidMovesFor(Position).ToList();
 
-            return TryMove(occupiedSquares, ref newPos, ref oldPos, possibleMoves);
+            return TryMove(occupiedSquares, possibleMoves, ref pos);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using ChessLib;
 using SampleProgram.Enumerations;
 using SampleProgram.Extentions;
+using SampleProgram.Factories;
+using SampleProgram.Validate;
 using System;
 using System.Collections.Generic;
 
@@ -9,14 +11,32 @@ namespace SampleProgram.Entities
     public class Board
     {
         private readonly Random _rnd = new Random();
+        private readonly IPieceFactory _pieceFactory;
+        private readonly IValidator _validator;
+
         public List<Piece> Pieces { get; private set; } = new List<Piece>();
 
+        public Board(IPieceFactory pieceFactory, IValidator validator)
+        {
+            _pieceFactory = pieceFactory;
+            _validator = validator;
+        }
+
+        public void SetBoard(List<(PieceType Type, Position Pos)> pieces)
+        {
+            _validator.Validate(pieces);
+
+            foreach(var piece in pieces)
+            {
+                Pieces.Add(_pieceFactory.CreatePiece(piece));
+            }
+        }
 
         public void SetRandomBoard(int numberOfPieces)
         {
             if(numberOfPieces < 1 || numberOfPieces > 64)
             {
-                throw new ArgumentException($"Invalid number of pieces {numberOfPieces}");
+                throw new ArgumentException($"Invalid number of pieces: {numberOfPieces}");
             }
 
             var boardSquares = GetBoardSquares();
@@ -25,24 +45,7 @@ namespace SampleProgram.Entities
             for (var i = 0; i < numberOfPieces; i++)
             {
                 PieceType piece = GetRandomPiece();
-
-                //var numberOfAvailablePieces = GetNumberOfAvailablePieces();
-                //var piece = GetRandomPiece(numberOfAvailablePieces);
-
-                switch (piece)
-                {
-                    case PieceType.Queen:
-                        Pieces.Add(new Queen(new Position(boardSquares[i].X, boardSquares[i].Y)));
-                        break;
-                    case PieceType.Bishop:
-                        Pieces.Add(new Bishop(new Position(boardSquares[i].X, boardSquares[i].Y)));
-                        break;
-                    case PieceType.Knight:
-                        Pieces.Add(new Knight(new Position(boardSquares[i].X, boardSquares[i].Y)));
-                        break;
-                    default:
-                        throw new InvalidOperationException($"Unknown piece: {piece}");
-                }
+                Pieces.Add(_pieceFactory.CreatePiece((piece, new Position(boardSquares[i].X, boardSquares[i].Y))));
             }
         }
 
@@ -52,12 +55,13 @@ namespace SampleProgram.Entities
 
             Pieces.Shuffle();
 
-            foreach(var p in Pieces)
+            foreach(var piece in Pieces)
             {
-                if( p.TryMove(GetOccupiedSquares(), out Position? newPos, out Position? oldPos))
+                if(piece.TryMove(GetOccupiedSquares(), out (Position? NewPos, Position? OldPos)? pos))
                 {
-                    var piece = p.GetType().Name;
-                    output = $"Move {piece} from {oldPos} to {newPos.ToString()}" ;
+                    var pieceName = piece.GetType().Name;
+                    output = $"Move {pieceName} from {pos.Value.OldPos} to {pos.Value.NewPos}" ;
+
                     return true;
                 }
             }
@@ -69,23 +73,13 @@ namespace SampleProgram.Entities
         {
             var result = new List<Position>();
 
-            foreach(var p in Pieces)
+            foreach(var piece in Pieces)
             {
-                result.Add(p.Position);
+                result.Add(piece.Position);
             }
 
             return result;
         }
-
-        //public void SetBoardWith3Pieces()
-        //{
-        //    Pieces = new List<Piece>
-        //    {
-        //        new Queen(new Position(3,3)),
-        //        new Queen(new Position(5,5)),
-        //        new Queen(new Position(7,7)),
-        //    };
-        //}
 
         private List<(int X,int Y)> GetBoardSquares()
         {
@@ -108,15 +102,5 @@ namespace SampleProgram.Entities
             PieceType piece = (PieceType)values.GetValue(_rnd.Next(values.Length));
             return piece;
         }
-
-        //private static int GetNumberOfAvailablePieces()
-        //{
-        //    return Enum.GetNames(typeof(PieceType)).Length;
-        //}
-
-        //private PieceType GetRandomPiece(int numberOfAvailablePieces)
-        //{
-        //    return (PieceType)_rnd.Next(numberOfAvailablePieces);
-        //}
     }
 }
