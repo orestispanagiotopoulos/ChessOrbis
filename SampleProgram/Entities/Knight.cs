@@ -6,9 +6,9 @@ using System.Text;
 
 namespace SampleProgram.Entities
 {
-    public class Queen : Piece
+    public class Knight : Piece
     {
-        public Queen(Position pos) : base(pos)
+        public Knight(Position pos) : base(pos)
         {
         }
 
@@ -17,8 +17,8 @@ namespace SampleProgram.Entities
             newPos = null;
             oldPos = null;
 
-            var queenMove = new QueenMove();
-            List<Position> possibleMoves = queenMove.ValidMovesFor(Position).ToList();
+            var knightMove = new KnightMove();
+            List<Position> possibleMoves = knightMove.ValidMovesFor(Position).ToList();
 
             return TryMove(occupiedSquares, ref newPos, ref oldPos, possibleMoves);
         }

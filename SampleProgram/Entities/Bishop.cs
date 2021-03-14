@@ -1,14 +1,12 @@
 ﻿using ChessLib;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SampleProgram.Entities
 {
-    public class Queen : Piece
+    public class Bishop : Piece
     {
-        public Queen(Position pos) : base(pos)
+        public Bishop(Position pos) : base(pos)
         {
         }
 
@@ -17,8 +15,8 @@ namespace SampleProgram.Entities
             newPos = null;
             oldPos = null;
 
-            var queenMove = new QueenMove();
-            List<Position> possibleMoves = queenMove.ValidMovesFor(Position).ToList();
+            var bishopMove = new BishopMove();
+            List<Position> possibleMoves = bishopMove.ValidMovesFor(Position).ToList();
 
             return TryMove(occupiedSquares, ref newPos, ref oldPos, possibleMoves);
         }
