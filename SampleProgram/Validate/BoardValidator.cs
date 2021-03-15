@@ -17,9 +17,9 @@ namespace SampleProgram.Validate
         {
             foreach (var piece in Pieces)
             {
-                if (piece.Pos.X > 64 || piece.Pos.X < 1 || piece.Pos.Y > 64 || piece.Pos.Y < 1)
+                if (piece.Pos.X > 8 || piece.Pos.X < 1 || piece.Pos.Y > 8 || piece.Pos.Y < 1)
                 {
-                    throw new ArgumentException($"The piece {piece.Type} has invalid position: {piece.Pos}");
+                    throw new ArgumentException($"The {piece.Type} has invalid position: {piece.Pos}");
                 }
             }
         }
@@ -32,7 +32,7 @@ namespace SampleProgram.Validate
             {
                 if (!hs.Add(Pieces[i].Pos))
                 {
-                    throw new ArgumentException($"The piece {Pieces[i].Type} occupied the position of anoter piece. " +
+                    throw new ArgumentException($"The {Pieces[i].Type} occupied the position of another piece. " +
                         $"The dublicate positon is {Pieces[i].Pos}");
                 }
             }

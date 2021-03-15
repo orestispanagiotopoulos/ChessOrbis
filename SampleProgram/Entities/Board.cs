@@ -32,6 +32,11 @@ namespace SampleProgram.Entities
             }
         }
 
+        /// <summary>
+        /// This method is not used currently but is another option to initialize the board with a predefined number of pieces. 
+        /// This method is adding the specified number of random pieces in random initial positions.
+        /// </summary>
+        /// <param name="numberOfPieces"></param>
         public void SetRandomBoard(int numberOfPieces)
         {
             if(numberOfPieces < 1 || numberOfPieces > 64)

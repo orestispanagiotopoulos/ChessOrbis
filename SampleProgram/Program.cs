@@ -13,6 +13,7 @@ namespace SampleProgram
             catch(Exception e)
             {
                 Console.WriteLine($"Error: {e.Message}");
+                Console.WriteLine("Press any key ...");
                 Console.ReadKey();
             }
         }
